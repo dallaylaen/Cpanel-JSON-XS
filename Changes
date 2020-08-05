@@ -4,6 +4,13 @@ TODO: http://stevehanov.ca/blog/index.php?id=104 compression
 
 4.20 2020-08-?? (rurban)
         - Fix encode of threads::shared boolean (#166 Sam Bingner).
+          This was broken with 4.00.
+        - Fix some stringify overload cases via convert_blessed (GH #105)
+        - Fix a compat case with JSON::XS, when convert_blessed is set, but
+          allow_blessed not. (GH #105)
+        - Improve blessed and stringify tests
+        - Fix inf/nan detection on AIX (#165 Peter Heuchert)
+        - Fix documentation for booleans and their types (#162 by Karen Etheridge)
 
 4.19 2020-02-06 (rurban)
         - Fix typed decode memory leak (#160 by Pali).
