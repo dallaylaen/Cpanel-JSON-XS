@@ -5,13 +5,12 @@ use Test::More;
 BEGIN {
   eval { require Time::Piece; 1 }
     or plan skip_all => "Time::Piece required";
-  $ENV{PERL_JSON_BACKEND} = 'JSON::PP';
-  eval { use JSON 2.09 (); 1 }
-    or plan skip_all => 'JSON 2.09 required for cross testing';
+  eval ' use JSON::PP 2.09 (); 1 '
+    or plan skip_all => 'JSON::PP 2.09 required for cross testing';
 }
 use Time::Piece;
+use JSON::PP ();
 plan $] < 5.008 ? (skip_all => "5.6 no AMG yet") : (tests => 18);
-use JSON ();
 use Cpanel::JSON::XS;
 
 my $time = localtime;
@@ -53,7 +52,7 @@ like( $enc, qr/REF\(0x[A-Fa-f0-9]+\)/, "nomg ref stringified" )
   or diag($enc);
 
 # 46, 49
-my $pp = JSON->new->allow_unknown->allow_blessed;
+my $pp = JSON::PP->new->allow_unknown->allow_blessed;
 $json = Cpanel::JSON::XS->new->allow_stringify;
 
 is( $pp->encode  ( {false => \"some"} ), '{"false":null}',  'pp \"some"');
